@@ -18,3 +18,5 @@ public class SpringBasicsApplication {
 	}
 
 }
+
+//http://localhost:8085/actuator/configprops
