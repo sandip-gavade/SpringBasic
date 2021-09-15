@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jeasy.random.EasyRandom;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +18,31 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 public class ApplicationController {
+	
+	@Value("${my.message}")
+	private String myMessage;
+	
+	@Value("${my.listValue}")
+	List<String> list;
+	
+	@Value("${my.mapValues}")
+	private String map;
+	
+	@Value("static message")
+	private String staticMessage;
+	
+	@Autowired
+	DbSettings dbSettings;
+	
+	@GetMapping("/value")
+	private String GetValue() {
+		return "Value annotation demo-"+myMessage+list+map+staticMessage;
+	}
+	
+	@GetMapping("/valuebean")
+	private String GetValuebean() {
+		return "Value annotation bean demo-"+dbSettings.getHost()+dbSettings.getPort()+dbSettings.getConnections()+""+dbSettings.getDefaultRecipients();
+	}
 	
 	@RequestMapping("/login")
 	public String getmapping() {
@@ -43,5 +71,7 @@ public class ApplicationController {
 		return persons;
 		
 	}
+	
+	
 
 }
